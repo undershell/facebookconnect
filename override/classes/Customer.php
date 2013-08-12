@@ -84,6 +84,8 @@ class Customer extends CustomerCore
 	
 	/**
 	 * Logout
+	 *
+	 * @since 1.5.0
 	 */
 	public function logout()
 	{
@@ -91,9 +93,24 @@ class Customer extends CustomerCore
 			Context::getContext()->cookie->logout();
 		$this->logged = 0;
 		$this->fblogged = 0;
+		Context::getContext()->cookie->__set("fblogged", 0);
 	}
 
-	
+	/**
+	 * Soft logout, delete everything links to the customer
+	 * but leave there affiliate's informations
+	 *
+	 * @since 1.5.0
+	 */
+	public function mylogout()
+	{
+		if (isset(Context::getContext()->cookie))
+			Context::getContext()->cookie->mylogout();
+		$this->logged = 0;
+		$this->fblogged = 0;
+		Context::getContext()->cookie->__set("fblogged", 0);
+	}
+
 	public function setFb_uid()
 	{	
 		$sql = 'UPDATE `'._DB_PREFIX_.'customer`
